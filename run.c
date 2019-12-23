@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
         printf("文件基本名：%s\n", fileNameWithoutExt);
         printf("文件类型是：%s\n", fileExt);
         printf("文件路径是：%s\n", fFilename);
-        printf("--------------------------------\n");
+        printf("---------------------------------n");
         if (strcmp(fileExt, ".txt") == 0)
         {
             printf("现在打开的是.txt文件");
@@ -81,11 +81,11 @@ int main(int argc, char *argv[])
     }
     else
     {
-        printf("--------------------------------\n");
-        printf("主要参数不符合规范，请检查输入！");
+        printf("---------------------------------\n");
+        printf("未匹配的当前文件类型，请检查输入！");
     }
 
-    printf("\n--------------------------------\n");
+    printf("\n---------------------------------\n");
     system("pause");
     
     return 0;
