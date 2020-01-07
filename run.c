@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
         strcat(comstr, fFilename);
         strcat(comstr, "\"");
         printf("%s\n", comstr);
-        system(comstr); //执行cd /d filepath
+        system(comstr); //执行cd /d filepath目录跳转
         memset(comstr, 0, sizeof(comstr));  //清空字符串
         //*/        
         if (strcmp(fileExt, ".txt") == 0)
