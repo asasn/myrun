@@ -9,7 +9,8 @@ int main(int argc, char *argv[])
     char fileNameWithoutExt[99];
     char filePath[99];
     char fFilename[128] = {};
-    char comstr[255];
+    char comText[255];
+    char comTextFinall[255];
     _splitpath(argv[1], dirve, filePath, fileNameWithoutExt, fileExt);
     strcat(fFilename, dirve);
     strcat(fFilename, filePath);
@@ -21,66 +22,42 @@ int main(int argc, char *argv[])
         printf("文件目录是：%s\n", fFilename);
         */
         printf("完整路径是：%s\n\n", argv[1]);
-        strcat(comstr, "cd");
-        strcat(comstr, " /d ");
-        strcat(comstr, "\"");
-        strcat(comstr, fFilename);
-        strcat(comstr, "\"");
-        printf("%s\n", comstr);
-        system(comstr); //执行cd /d filepath目录跳转
-        memset(comstr, 0, sizeof(comstr));  //清空字符串
-        //*/        
-        if (strcmp(fileExt, ".txt") == 0)
+        //*/ 
+        if (!strcmp(fileExt, ".txt"))
         {
             printf("现在打开的是.txt文件");
         }
-        if (strcmp(fileExt, ".bat") == 0 || strcmp(fileExt, ".cmd") == 0)
+        if (!strcmp(fileExt, ".bat") || !strcmp(fileExt, ".cmd"))
         {
-            strcat(comstr, "\"");
-            strcat(comstr, argv[1]);
-            strcat(comstr, "\"");
+            sprintf(comText, "\"%s\"", argv[1]);
         }
-        if (strcmp(fileExt, ".py") == 0)
+        if (!strcmp(fileExt, ".py") || !strcmp(fileExt, ".pyw"))
         {
-            strcat(comstr, "\"");
-            strcat(comstr, argv[1]);
-            strcat(comstr, "\"");
+            sprintf(comText, "\"%s\"", argv[1]);
         }
-        if (strcmp(fileExt, ".ui") == 0)
+        if (!strcmp(fileExt, ".ui"))
         {
-            strcat(comstr, "pyuic5 \"");
-            strcat(comstr, argv[1]);
-            strcat(comstr, "\" -o ");
-            strcat(comstr, fileNameWithoutExt);
-            strcat(comstr, ".py");
+            sprintf(comText, "pyuic5 \"%s\" -o \"%s.py\"", argv[1], fileNameWithoutExt);
         }
-        if (strcmp(fileExt, ".c") == 0)
+        if (!strcmp(fileExt, ".c"))
         {
-            strcat(comstr, "gcc -fexec-charset=gbk \"");
-            strcat(comstr, argv[1]);
-            strcat(comstr, "\" -o \"");
-            strcat(comstr, fileNameWithoutExt);
-            strcat(comstr, "\" && \"");
-            strcat(comstr, fileNameWithoutExt);
-            strcat(comstr, "\"");
+            sprintf(comText, "gcc -fexec-charset=gbk \"%s\" -o \"%s\" && \"%s.exe\"", argv[1], fileNameWithoutExt, fileNameWithoutExt);
         }
-        if (strcmp(fileExt, ".cpp") == 0)
+        if (!strcmp(fileExt, ".cpp"))
         {
-            strcat(comstr, "g++ \"");
-            strcat(comstr, argv[1]);
-            strcat(comstr, "\" && ");
-            strcat(comstr, fileNameWithoutExt);
+            sprintf(comText, "g++ -fexec-charset=gbk \"%s\" -o \"%s\" && \"%s.exe\"", argv[1], fileNameWithoutExt, fileNameWithoutExt);
         }
     }
     else
     {
         printf("未匹配的当前文件类型，请检查输入！\n");
-        strcpy(comstr, "chdir");
-    }
-    printf("%s\n", comstr);
+        strcpy(comText, "chdir");
+    } 
+    sprintf(comTextFinall, "cd /d %s && %s", fFilename, comText);    
     printf("------------------------------------------------------------------\n");
-    system(comstr);
+    system(comTextFinall);
     printf("------------------------------------------------------------------\n");
+    printf("%s\n", comText);
     system("pause");
 
     return 0;
