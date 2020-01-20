@@ -47,6 +47,19 @@ int main(int argc, char *argv[])
         {
             sprintf(comText, "g++ -fexec-charset=gbk \"%s\" -o \"%s\" && \"%s.exe\"", argv[1], fileNameWithoutExt, fileNameWithoutExt);
         }
+        if (!strcmp(fileExt, ".cs"))
+        {
+            sprintf(comText, "csc \"%s\" && \"%s\"", argv[1], fileNameWithoutExt);
+        }
+        if (!strcmp(fileExt, ".java"))
+        {
+            sprintf(comText, "javac -encoding UTF-8 \"%s\" && java \"%s\"", argv[1], fileNameWithoutExt);
+        }
+        if (!strcmp(fileExt, ".csproj"))
+        {
+            sprintf(comText, "dotnet run --project \"%s\"", argv[1]);
+        }
+        
     }
     else
     {
