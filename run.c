@@ -8,24 +8,27 @@ int main(int argc, char *argv[])
     char dirve[9];
     char fileNameWithoutExt[99];
     char filePath[99];
-    char fFilename[128] = {};
+    char fDir[128] = {};
     char comText[255];
     char comTextFinall[255];
+    int MAXPATH = 1024;
+    char buffer[MAXPATH];
+    _getcwd(buffer, MAXPATH);
     _splitpath(argv[1], dirve, filePath, fileNameWithoutExt, fileExt);
-    strcat(fFilename, dirve);
-    strcat(fFilename, filePath);
+    strcat(fDir, dirve);
+    strcat(fDir, filePath);
     if (*fileExt != 0)
     {
         /*
         printf("文件基本名：%s\n", fileNameWithoutExt);
         printf("文件类型是：%s\n", fileExt);
-        printf("文件目录是：%s\n", fFilename);
+        printf("文件目录是：%s\n", fDir);
         */
-        printf("完整路径是：%s\n\n", argv[1]);
+        printf("文件路径：%s\n", argv[1]);
         //*/ 
         if (!strcmp(fileExt, ".txt"))
         {
-            printf("现在打开的是.txt文件");
+            goto Unmatched;
         }
         if (!strcmp(fileExt, ".bat") || !strcmp(fileExt, ".cmd"))
         {
@@ -63,14 +66,17 @@ int main(int argc, char *argv[])
     }
     else
     {
-        printf("未匹配的当前文件类型，请检查输入！\n");
-        strcpy(comText, "chdir");
+        printf("   ERROR：未匹配的当前文件类型，请检查输入！\n");
+        strcpy(fDir, buffer);
+        Unmatched:
+        sprintf(comText, "echo %s", buffer);
     } 
-    sprintf(comTextFinall, "cd /d %s && %s", fFilename, comText);    
+    sprintf(comTextFinall, "cd /d \"%s\" && %s", fDir, comText);
+    printf("当前路径：%s\n", fDir);
+    printf("运行命令：%s\n", comText);
     printf("------------------------------------------------------------------\n");
     system(comTextFinall);
     printf("------------------------------------------------------------------\n");
-    printf("%s\n", comText);
     system("pause");
 
     return 0;
